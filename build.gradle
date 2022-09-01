@@ -30,6 +30,13 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+jar {
+	enabled = false
+	manifest {
+		attributes('Main-Class': 'com.nathanael.fruitshop.FruitshopApplication')
+	}
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
