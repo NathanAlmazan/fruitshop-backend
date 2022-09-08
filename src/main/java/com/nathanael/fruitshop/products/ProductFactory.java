@@ -44,7 +44,7 @@ public class ProductFactory implements ModelFactory<Product, ProductDto> {
         productDto.setDiscountedPrice(entity.getDiscountedPrice());
         productDto.setProductImage(entity.getProductImage());
         productDto.setIsActive(entity.getIsActive());
-        productDto.setCategoryId(entity.getProductCategory().getCategoryId());
+        if (entity.getProductCategory() != null) productDto.setCategoryId(entity.getProductCategory().getCategoryId());
 
         if (additionalFields != null) {
             if (additionalFields.remove("units")) {
@@ -53,11 +53,24 @@ public class ProductFactory implements ModelFactory<Product, ProductDto> {
             }
 
             if (additionalFields.remove("category")) {
-                productDto.setProductCategory(categoryServices.getDtoById(entity.getProductCategory().getCategoryId(), additionalFields));
+                if (entity.getProductCategory() != null)
+                    productDto.setProductCategory(categoryServices.getDtoById(entity.getProductCategory().getCategoryId(), additionalFields));
                 additionalFields.add("category");
             }
         }
 
         return productDto;
+    }
+
+    public Product requestToUpdatedEntity(ProductDto request, Product entity) {
+        entity.setProductName(request.getProductName());
+        entity.setUnitType(unitMeasureServices.getById(request.getUnitTypeCode()));
+        entity.setUnitPrice(request.getUnitPrice());
+        entity.setDiscountedPrice(request.getDiscountedPrice());
+        entity.setProductImage(request.getProductImage());
+        entity.setIsActive(request.getIsActive());
+        entity.setProductCategory(categoryServices.getById(request.getCategoryId()));
+
+        return entity;
     }
 }

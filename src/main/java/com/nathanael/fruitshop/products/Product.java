@@ -36,6 +36,6 @@ public class Product {
     private Boolean isActive = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_category", referencedColumnName = "categoryId", nullable = false)
+    @JoinColumn(name = "product_category", referencedColumnName = "categoryId")
     private Category productCategory;
 }

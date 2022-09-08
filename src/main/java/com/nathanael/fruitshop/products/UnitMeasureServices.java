@@ -29,12 +29,21 @@ public class UnitMeasureServices implements EntityCrudServices<UnitMeasure, Unit
 
     @Override
     public UnitMeasureDto update(UnitMeasureDto data) {
-        return null;
+        UnitMeasure updatedUnits = unitMeasureRepo.findById(data.getUnitCode())
+                .map(units -> unitMeasureRepo.save(unitMeasureFactory.requestToUpdatedEntity(data, units)))
+                .orElseThrow(() -> {
+                    throw new EntityNotFoundException("Unit measure with code of " + data.getUnitCode() + " is not found.");
+                });
+
+        return unitMeasureFactory.entityToResponse(updatedUnits, null);
     }
 
     @Override
     public UnitMeasureDto delete(String id) {
-        return null;
+        UnitMeasureDto deletedUnit = getDtoById(id, null);
+        unitMeasureRepo.deleteById(id);
+
+        return deletedUnit;
     }
 
     @Override

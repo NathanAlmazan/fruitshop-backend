@@ -27,12 +27,23 @@ public class ProductServices implements EntityCrudServices<Product, ProductDto, 
 
     @Override
     public ProductDto update(ProductDto data) {
-        return null;
+        Product updatedProduct = productRepo.findById(data.getProductCode())
+                .map(prod -> productRepo.save(productFactory.requestToUpdatedEntity(data, prod)))
+                .orElseThrow(() -> {
+                    throw new EntityNotFoundException("Product with code of " + data.getProductCode() + " is not found.");
+                });
+
+        return productFactory.entityToResponse(updatedProduct, null);
     }
 
     @Override
     public ProductDto delete(String id) {
-        return null;
+        ProductDto deletedProduct = getDtoById(id, null);
+
+        if (!deletedProduct.getIsActive()) productRepo.deleteById(id);
+        else productRepo.setProductInactive(id);
+
+        return deletedProduct;
     }
 
     @Override
@@ -54,6 +65,7 @@ public class ProductServices implements EntityCrudServices<Product, ProductDto, 
 
     @Override
     public List<ProductDto> getAll(List<String> additionalFields) {
-        return productFactory.entityListToResponse(productRepo.findAll(), additionalFields);
+        if (additionalFields.contains("inactive")) return productFactory.entityListToResponse(productRepo.findAllInActiveProducts(), additionalFields);
+        return productFactory.entityListToResponse(productRepo.findAllActiveProducts(), additionalFields);
     }
 }

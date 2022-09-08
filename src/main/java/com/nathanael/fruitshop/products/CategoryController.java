@@ -23,14 +23,16 @@ public class CategoryController implements EntityCrudController<CategoryDto, Lon
         return new ResponseEntity<>(categoryServices.create(data), HttpStatus.CREATED);
     }
 
+    @PutMapping
     @Override
-    public ResponseEntity<CategoryDto> update(CategoryDto data, Long id) {
-        return null;
+    public ResponseEntity<CategoryDto> update(@Valid @RequestBody CategoryDto data) {
+        return new ResponseEntity<>(categoryServices.update(data), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public ResponseEntity<CategoryDto> delete(Long id) {
-        return null;
+    public ResponseEntity<CategoryDto> delete(@PathVariable Long id) {
+        return new ResponseEntity<>(categoryServices.delete(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

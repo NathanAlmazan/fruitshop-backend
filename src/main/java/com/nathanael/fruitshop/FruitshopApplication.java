@@ -21,7 +21,7 @@ public class FruitshopApplication {
 			public void addCorsMappings(@NonNull CorsRegistry registry) {
 				registry.addMapping("/api/**").allowedOrigins("*")
 						.allowedHeaders("Content-Type", "Accept")
-						.allowedMethods("POST", "GET", "DELETE");
+						.allowedMethods("POST", "GET", "PUT", "DELETE");
 			}
 		};
 	}

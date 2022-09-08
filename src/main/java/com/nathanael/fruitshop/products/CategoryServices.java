@@ -23,12 +23,21 @@ public class CategoryServices implements EntityCrudServices<Category, CategoryDt
 
     @Override
     public CategoryDto update(CategoryDto data) {
-        return null;
+        Category updatedCategory = categoryRepo.findById(data.getCategoryId())
+                .map(category -> categoryRepo.save(categoryFactory.requestToUpdatedEntity(data, category)))
+                .orElseThrow(() -> {
+                    throw new EntityNotFoundException("Category with an ID of " + data.getCategoryId() + " is not found.");
+                });
+
+        return categoryFactory.entityToResponse(updatedCategory, null);
     }
 
     @Override
     public CategoryDto delete(Long id) {
-        return null;
+        CategoryDto deletedCategory = getDtoById(id, null);
+        categoryRepo.deleteById(id);
+
+        return deletedCategory;
     }
 
     @Override

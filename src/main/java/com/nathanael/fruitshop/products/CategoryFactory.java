@@ -40,4 +40,12 @@ public class CategoryFactory implements ModelFactory<Category, CategoryDto> {
 
         return categoryDto;
     }
+
+    public Category requestToUpdatedEntity(CategoryDto request, Category entity) {
+        entity.setCategoryName(request.getCategoryName());
+        entity.setCategoryIcon(request.getCategoryIcon());
+        entity.setRawMaterial(request.getRawMaterial());
+
+        return entity;
+    }
 }

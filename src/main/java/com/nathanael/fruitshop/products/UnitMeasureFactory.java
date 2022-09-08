@@ -25,4 +25,10 @@ public class UnitMeasureFactory implements ModelFactory<UnitMeasure, UnitMeasure
 
         return unitMeasureDto;
     }
+
+    public UnitMeasure requestToUpdatedEntity(UnitMeasureDto request, UnitMeasure entity) {
+        entity.setUnitLabel(request.getUnitLabel());
+
+        return entity;
+    }
 }

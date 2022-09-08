@@ -23,14 +23,16 @@ public class UnitMeasureController implements EntityCrudController<UnitMeasureDt
         return new ResponseEntity<>(unitMeasureServices.create(data), HttpStatus.CREATED);
     }
 
+    @PutMapping
     @Override
-    public ResponseEntity<UnitMeasureDto> update(UnitMeasureDto data, String id) {
-        return null;
+    public ResponseEntity<UnitMeasureDto> update(@Valid @RequestBody UnitMeasureDto data) {
+        return new ResponseEntity<>(unitMeasureServices.update(data), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public ResponseEntity<UnitMeasureDto> delete(String id) {
-        return null;
+    public ResponseEntity<UnitMeasureDto> delete(@PathVariable String id) {
+        return new ResponseEntity<>(unitMeasureServices.delete(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

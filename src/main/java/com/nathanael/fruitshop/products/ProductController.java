@@ -23,14 +23,16 @@ public class ProductController implements EntityCrudController<ProductDto, Strin
         return new ResponseEntity<>(productServices.create(data), HttpStatus.CREATED);
     }
 
+    @PutMapping
     @Override
-    public ResponseEntity<ProductDto> update(ProductDto data, String id) {
-        return null;
+    public ResponseEntity<ProductDto> update(@Valid @RequestBody ProductDto data) {
+        return new ResponseEntity<>(productServices.update(data), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public ResponseEntity<ProductDto> delete(String id) {
-        return null;
+    public ResponseEntity<ProductDto> delete(@PathVariable String id) {
+        return new ResponseEntity<>(productServices.delete(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

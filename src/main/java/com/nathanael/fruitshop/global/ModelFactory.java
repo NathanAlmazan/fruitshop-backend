@@ -1,5 +1,8 @@
 package com.nathanael.fruitshop.global;
 
+import com.nathanael.fruitshop.products.Category;
+import com.nathanael.fruitshop.products.CategoryDto;
+
 import java.util.ArrayList;
 import java.util.List;
 
