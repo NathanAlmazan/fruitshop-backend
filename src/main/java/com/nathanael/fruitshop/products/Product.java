@@ -1,10 +1,12 @@
 package com.nathanael.fruitshop.products;
 
+import com.nathanael.fruitshop.sales.OrderItems;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,4 +40,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_category", referencedColumnName = "categoryId")
     private Category productCategory;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<OrderItems> orderItems;
 }
