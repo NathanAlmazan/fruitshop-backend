@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,12 @@ public class Orders {
 
     @Column(length = 13)
     private String transactionId;
+
+    @Column
+    private Double paidAmount;
+
+    @Column
+    private LocalDateTime timestamp = LocalDateTime.now();
 
     @OneToMany(mappedBy = "orders", fetch = FetchType.LAZY)
     private List<OrderItems> orderItems;

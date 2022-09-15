@@ -7,12 +7,19 @@ import java.util.List;
 
 @Component
 public class OrderFactory implements ModelFactory<Orders, OrderDto> {
+    private final OrderItemFactory orderItemFactory;
+
+    public OrderFactory(OrderItemFactory orderItemFactory) {
+        this.orderItemFactory = orderItemFactory;
+    }
+
     @Override
     public Orders requestToEntity(OrderDto request) {
         Orders orders = new Orders();
         orders.setTotalAmount(request.getTotalAmount());
         orders.setPaymentType(request.getPaymentType());
         orders.setTransactionId(request.getTransactionId());
+        orders.setPaidAmount(request.getPaidAmount());
 
         return orders;
     }
@@ -24,6 +31,15 @@ public class OrderFactory implements ModelFactory<Orders, OrderDto> {
         orderDto.setTotalAmount(entity.getTotalAmount());
         orderDto.setPaymentType(entity.getPaymentType());
         orderDto.setTransactionId(entity.getTransactionId());
+        orderDto.setTimestamp(entity.getTimestamp());
+        orderDto.setPaidAmount(entity.getPaidAmount());
+
+        if (additionalFields != null) {
+            if (additionalFields.remove("items")) {
+                orderDto.setOrderItems(orderItemFactory.entityListToResponse(entity.getOrderItems(), additionalFields));
+                additionalFields.add("items");
+            }
+        }
 
         return orderDto;
     }

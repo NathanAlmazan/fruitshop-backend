@@ -15,6 +15,13 @@ import java.io.Serializable;
 @Embeddable
 @NoArgsConstructor
 public class OrderItemKey implements Serializable {
-    @Column private Long orderId;
-    @Column private String productCode;
+
+    @Column(nullable = false)
+    private Long orderId;
+
+    @Column(length = 3, nullable = false)
+    private String productCode;
+
+    @Column(length = 3, nullable = false)
+    private String typeCode;
 }

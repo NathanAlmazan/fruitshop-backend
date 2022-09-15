@@ -1,5 +1,6 @@
 package com.nathanael.fruitshop.products;
 
+import com.nathanael.fruitshop.sales.OrderItems;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,5 +22,8 @@ public class UnitMeasure {
     private String unitLabel;
 
     @OneToMany(mappedBy = "unitType", fetch = FetchType.LAZY)
-    private List<Product> unitProducts;
+    private List<UnitPrices> unitPrices;
+
+    @OneToMany(mappedBy = "unitType", fetch = FetchType.LAZY)
+    private List<OrderItems> orderItems;
 }

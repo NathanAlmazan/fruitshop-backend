@@ -11,10 +11,14 @@ import java.util.List;
 public class ProductServices implements EntityCrudServices<Product, ProductDto, String> {
     private final ProductRepo productRepo;
     private final ProductFactory productFactory;
+    private final UnitPricesRepo unitPricesRepo;
+    private final UnitPricesFactory unitPricesFactory;
 
-    public ProductServices(ProductRepo productRepo, ProductFactory productFactory) {
+    public ProductServices(ProductRepo productRepo, ProductFactory productFactory, UnitPricesRepo unitPricesRepo, UnitPricesFactory unitPricesFactory) {
         this.productRepo = productRepo;
         this.productFactory = productFactory;
+        this.unitPricesRepo = unitPricesRepo;
+        this.unitPricesFactory = unitPricesFactory;
     }
 
     @Override
@@ -22,7 +26,13 @@ public class ProductServices implements EntityCrudServices<Product, ProductDto, 
         if (entityExists(data.getProductCode()))
             throw new InvalidRequestException("Product with code of " + data.getProductCode() + " already exists.");
 
-        return productFactory.entityToResponse(productRepo.save(productFactory.requestToEntity(data)), null);
+        productRepo.save(productFactory.requestToEntity(data));
+        data.getUnitPrices().forEach(unit -> {
+            unit.setProductCode(data.getProductCode());
+            unitPricesRepo.save(unitPricesFactory.requestToEntity(unit));
+        });
+
+        return productFactory.entityToResponse(getById(data.getProductCode()), null);
     }
 
     @Override
@@ -32,6 +42,26 @@ public class ProductServices implements EntityCrudServices<Product, ProductDto, 
                 .orElseThrow(() -> {
                     throw new EntityNotFoundException("Product with code of " + data.getProductCode() + " is not found.");
                 });
+
+        data.getUnitPrices().forEach(price -> {
+            UnitPrices current = updatedProduct.getUnitPrices().stream()
+                    .filter(unit -> unit.getUnitPriceKey().getUnitCode().equals(price.getUnitType()))
+                    .findAny()
+                    .orElse(null);
+
+            if (current != null) {
+                unitPricesRepo.findById(current.getUnitPriceKey())
+                        .map(unit -> {
+                            unit.setUnitPrice(price.getUnitPrice());
+                            return unitPricesRepo.save(unit);
+                        })
+                        .orElseThrow(() -> {
+                            throw new EntityNotFoundException("Unit price not found.");
+                        });
+            } else {
+                unitPricesRepo.save(unitPricesFactory.requestToEntity(price));
+            }
+        });
 
         return productFactory.entityToResponse(updatedProduct, null);
     }

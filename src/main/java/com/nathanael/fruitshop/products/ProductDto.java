@@ -3,7 +3,9 @@ package com.nathanael.fruitshop.products;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 public class ProductDto {
@@ -16,14 +18,9 @@ public class ProductDto {
     @Length(min = 1, max = 30, message = "Product name should be 1 to 30 characters long only.")
     private String productName;
 
-    @NotNull(message = "Product unit of measurement is required.")
-    @Length(min = 1, max = 3, message = "Product unit of measurement should be 1 to 3 characters long only.")
-    private String unitTypeCode;
-
-    private UnitMeasureDto unitType;
-
-    @NotNull(message = "Product unit price is required.")
-    private Double unitPrice;
+    @NotNull(message = "Product unit prices is required.")
+    @Valid
+    private List<UnitPricesDto> unitPrices;
 
     private Double discountedPrice = 0.00;
 

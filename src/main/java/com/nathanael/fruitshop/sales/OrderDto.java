@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -25,7 +26,11 @@ public class OrderDto {
     @Length(max = 13)
     private String transactionId;
 
+    private Double paidAmount;
+
     @NotNull(message = "Orders items is required.")
     @Valid
     private List<OrderItemDto> orderItems;
+
+    private LocalDateTime timestamp;
 }

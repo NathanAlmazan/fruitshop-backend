@@ -62,6 +62,6 @@ public class OrderServices implements EntityCrudServices<Orders, OrderDto, Long>
 
     @Override
     public List<OrderDto> getAll(List<String> additionalFields) {
-        return null;
+        return orderFactory.entityListToResponse(orderRepo.findAll(), additionalFields);
     }
 }

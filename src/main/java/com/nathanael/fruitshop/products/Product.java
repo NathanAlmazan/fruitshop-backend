@@ -21,12 +21,8 @@ public class Product {
     @Column(length = 30, nullable = false)
     private String productName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "unit_type", referencedColumnName = "unitCode", nullable = false)
-    private UnitMeasure unitType;
-
-    @Column(nullable = false)
-    private Double unitPrice;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<UnitPrices> unitPrices;
 
     @Column
     private Double discountedPrice = 0.00;

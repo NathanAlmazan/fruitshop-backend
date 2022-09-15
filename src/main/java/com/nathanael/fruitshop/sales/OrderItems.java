@@ -1,6 +1,7 @@
 package com.nathanael.fruitshop.sales;
 
 import com.nathanael.fruitshop.products.Product;
+import com.nathanael.fruitshop.products.UnitMeasure;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,11 @@ public class OrderItems {
     @MapsId("productCode")
     @JoinColumn(name = "product_code")
     private Product product;
+
+    @ManyToOne
+    @MapsId("typeCode")
+    @JoinColumn(name = "type_code")
+    private UnitMeasure unitType;
 
     @Column
     private Integer quantity;

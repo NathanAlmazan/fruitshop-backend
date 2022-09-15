@@ -19,6 +19,10 @@ public class OrderItemDto {
     @Length(min = 1, max = 3)
     private String productCode;
 
+    @NotNull(message = "Unit code is required.")
+    @Length(min = 1, max = 3)
+    private String unitCode;
+
     @NotNull(message = "Item quantity is required.")
     private Integer quantity;
 

@@ -8,14 +8,11 @@ import java.util.List;
 
 @Component
 public class ProductFactory implements ModelFactory<Product, ProductDto> {
-    private final UnitMeasureServices unitMeasureServices;
+    private final UnitPricesFactory unitPricesFactory;
     private final CategoryServices categoryServices;
 
-    public ProductFactory(
-            @Lazy UnitMeasureServices unitMeasureServices,
-            @Lazy CategoryServices categoryServices
-    ) {
-        this.unitMeasureServices = unitMeasureServices;
+    public ProductFactory(@Lazy UnitPricesFactory unitPricesFactory, @Lazy CategoryServices categoryServices) {
+        this.unitPricesFactory = unitPricesFactory;
         this.categoryServices = categoryServices;
     }
 
@@ -24,8 +21,6 @@ public class ProductFactory implements ModelFactory<Product, ProductDto> {
         Product product = new Product();
         product.setProductCode(request.getProductCode());
         product.setProductName(request.getProductName());
-        product.setUnitType(unitMeasureServices.getById(request.getUnitTypeCode()));
-        product.setUnitPrice(request.getUnitPrice());
         product.setDiscountedPrice(request.getDiscountedPrice());
         product.setProductImage(request.getProductImage());
         product.setIsActive(request.getIsActive());
@@ -39,17 +34,15 @@ public class ProductFactory implements ModelFactory<Product, ProductDto> {
         ProductDto productDto = new ProductDto();
         productDto.setProductCode(entity.getProductCode());
         productDto.setProductName(entity.getProductName());
-        productDto.setUnitTypeCode(entity.getUnitType().getUnitCode());
-        productDto.setUnitPrice(entity.getUnitPrice());
         productDto.setDiscountedPrice(entity.getDiscountedPrice());
         productDto.setProductImage(entity.getProductImage());
         productDto.setIsActive(entity.getIsActive());
         if (entity.getProductCategory() != null) productDto.setCategoryId(entity.getProductCategory().getCategoryId());
 
         if (additionalFields != null) {
-            if (additionalFields.remove("units")) {
-                productDto.setUnitType(unitMeasureServices.getDtoById(entity.getUnitType().getUnitCode(), additionalFields));
-                additionalFields.add("units");
+            if (additionalFields.remove("prices")) {
+                productDto.setUnitPrices(unitPricesFactory.entityListToResponse(entity.getUnitPrices(), additionalFields));
+                additionalFields.add("prices");
             }
 
             if (additionalFields.remove("category")) {
@@ -64,8 +57,6 @@ public class ProductFactory implements ModelFactory<Product, ProductDto> {
 
     public Product requestToUpdatedEntity(ProductDto request, Product entity) {
         entity.setProductName(request.getProductName());
-        entity.setUnitType(unitMeasureServices.getById(request.getUnitTypeCode()));
-        entity.setUnitPrice(request.getUnitPrice());
         entity.setDiscountedPrice(request.getDiscountedPrice());
         entity.setProductImage(request.getProductImage());
         entity.setIsActive(request.getIsActive());
