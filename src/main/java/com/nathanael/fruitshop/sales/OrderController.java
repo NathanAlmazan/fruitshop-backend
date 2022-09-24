@@ -23,9 +23,10 @@ public class OrderController implements EntityCrudController<OrderDto, Long> {
         return new ResponseEntity<>(orderServices.create(data), HttpStatus.CREATED);
     }
 
+    @PutMapping
     @Override
-    public ResponseEntity<OrderDto> update(OrderDto data) {
-        return null;
+    public ResponseEntity<OrderDto> update(@Valid @RequestBody OrderDto data) {
+        return new ResponseEntity<>(orderServices.update(data), HttpStatus.OK);
     }
 
     @Override
@@ -43,5 +44,15 @@ public class OrderController implements EntityCrudController<OrderDto, Long> {
     @Override
     public ResponseEntity<List<OrderDto>> getAll(@RequestParam(required = false) List<String> additionalFields) {
         return new ResponseEntity<>(orderServices.getAll(additionalFields), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistics/product")
+    public ResponseEntity<List<OrderItemStatistics>> getOrderItemsStatistics() {
+        return new ResponseEntity<>(orderServices.getOrderItemStatistics(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistics/sales")
+    public ResponseEntity<List<DailySalesReport>> getDailySalesReport() {
+        return new ResponseEntity<>(orderServices.getDailySalesReport(), HttpStatus.OK);
     }
 }

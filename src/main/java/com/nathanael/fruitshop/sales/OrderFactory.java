@@ -20,6 +20,7 @@ public class OrderFactory implements ModelFactory<Orders, OrderDto> {
         orders.setPaymentType(request.getPaymentType());
         orders.setTransactionId(request.getTransactionId());
         orders.setPaidAmount(request.getPaidAmount());
+        orders.setCancelled(request.getCancelled());
 
         return orders;
     }
@@ -33,6 +34,7 @@ public class OrderFactory implements ModelFactory<Orders, OrderDto> {
         orderDto.setTransactionId(entity.getTransactionId());
         orderDto.setTimestamp(entity.getTimestamp());
         orderDto.setPaidAmount(entity.getPaidAmount());
+        orderDto.setCancelled(entity.getCancelled());
 
         if (additionalFields != null) {
             if (additionalFields.remove("items")) {

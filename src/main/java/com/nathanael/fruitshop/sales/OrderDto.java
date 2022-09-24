@@ -28,6 +28,8 @@ public class OrderDto {
 
     private Double paidAmount;
 
+    private Boolean cancelled;
+
     @NotNull(message = "Orders items is required.")
     @Valid
     private List<OrderItemDto> orderItems;
