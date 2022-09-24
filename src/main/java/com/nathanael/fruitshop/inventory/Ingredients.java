@@ -41,6 +41,6 @@ public class Ingredients {
     @OneToMany(mappedBy = "ingredients", fetch = FetchType.LAZY)
     private List<PurchasedItems> purchasedItems;
 
-    @OneToMany(mappedBy = "ingredients", fetch = FetchType.LAZY)
-    private List<ReportedItems> reportedItems;
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<ItemsReport> itemsReports;
 }

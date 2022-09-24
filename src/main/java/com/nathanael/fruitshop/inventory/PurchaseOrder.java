@@ -32,6 +32,12 @@ public class PurchaseOrder {
     @Column
     private Boolean arrived = false;
 
+    @Column(nullable = false)
+    private String receiptURL;
+
+    @Column
+    private LocalDateTime dueDate;
+
     @Column
     private LocalDateTime purchaseDate = LocalDateTime.now();
 

@@ -33,9 +33,10 @@ public class OrderController implements EntityCrudController<OrderDto, Long> {
         return null;
     }
 
+    @GetMapping("/{id}")
     @Override
-    public ResponseEntity<OrderDto> getById(Long id, List<String> additionalFields) {
-        return null;
+    public ResponseEntity<OrderDto> getById(@PathVariable Long id, @RequestParam(required = false) List<String> additionalFields) {
+        return new ResponseEntity<>(orderServices.getDtoById(id, additionalFields), HttpStatus.OK);
     }
 
     @GetMapping

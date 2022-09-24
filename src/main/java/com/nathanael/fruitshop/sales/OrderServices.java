@@ -45,7 +45,7 @@ public class OrderServices implements EntityCrudServices<Orders, OrderDto, Long>
 
     @Override
     public OrderDto getDtoById(Long id, List<String> additionalFields) {
-        return null;
+        return orderFactory.entityToResponse(getById(id), additionalFields);
     }
 
     @Override
