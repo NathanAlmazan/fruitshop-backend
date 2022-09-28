@@ -97,6 +97,6 @@ public class IngredientsServices implements EntityCrudServices<Ingredients, Ingr
     }
 
     public List<ItemsReport> getItemsReport() {
-        return itemsReportRepo.findAll();
+        return itemsReportRepo.findAllByOrderByTimestampDesc();
     }
 }

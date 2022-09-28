@@ -59,6 +59,7 @@ public class ProductServices implements EntityCrudServices<Product, ProductDto, 
                             throw new EntityNotFoundException("Unit price not found.");
                         });
             } else {
+                price.setProductCode(updatedProduct.getProductCode());
                 unitPricesRepo.save(unitPricesFactory.requestToEntity(price));
             }
         });
