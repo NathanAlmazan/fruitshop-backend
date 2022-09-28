@@ -84,20 +84,17 @@ public class OrderServices implements EntityCrudServices<Orders, OrderDto, Long>
         List<DailySalesCount> dailySalesCountList = orderRepo.getDailySalesCount();
         List<DailySalesReport> dailySalesReportList = new ArrayList<>();
 
-        dailySalesCountList.forEach(report -> dailySalesReportList.add(new DailySalesReport(report.getReportMonth(), report.getReportDate(), report.getTotalSales())));
+        dailySalesCountList.forEach(report -> dailySalesReportList.add(new DailySalesReport(report.getReportYear(), report.getReportMonth(), report.getReportDate(), report.getTotalSales())));
 
         return dailySalesReportList;
     }
 
     public List<OrderItemStatistics> getOrderItemStatistics() {
         List<OrderItemStatistics> statisticsList = new ArrayList<>();
-        Long rowCount = orderItemsRepo.getOrderItemsCount().getEntityCount();
 
         orderItemsRepo.getGroupByProduct().forEach(item -> {
             ProductDto product = productServices.getDtoById(item.getProductCode(), null);
-            Double productPercentage = (double) item.getProductCount() / (double) rowCount;
-
-            statisticsList.add(new OrderItemStatistics(product, productPercentage));
+            statisticsList.add(new OrderItemStatistics(product, item.getProductCount()));
         });
 
         return statisticsList;

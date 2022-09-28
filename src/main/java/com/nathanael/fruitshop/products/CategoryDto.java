@@ -1,5 +1,6 @@
 package com.nathanael.fruitshop.products;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -7,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CategoryDto {
 
     private Long categoryId;

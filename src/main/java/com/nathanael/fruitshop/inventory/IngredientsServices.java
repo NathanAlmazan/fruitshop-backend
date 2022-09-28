@@ -95,4 +95,8 @@ public class IngredientsServices implements EntityCrudServices<Ingredients, Ingr
                 throw new EntityNotFoundException("Item with ID of " + id + " not found.");
             });
     }
+
+    public List<ItemsReport> getItemsReport() {
+        return itemsReportRepo.findAll();
+    }
 }

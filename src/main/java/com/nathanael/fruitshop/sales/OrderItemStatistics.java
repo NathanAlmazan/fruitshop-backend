@@ -12,5 +12,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class OrderItemStatistics {
     private ProductDto product;
-    private Double percentage;
+    private Long totalSold;
 }

@@ -45,4 +45,19 @@ public class PurchaseOrderController implements EntityCrudController<PurchaseOrd
     public ResponseEntity<List<PurchaseOrderDto>> getAll(@RequestParam(required = false) List<String> additionalFields) {
         return new ResponseEntity<>(purchaseOrderServices.getAll(additionalFields), HttpStatus.OK);
     }
+
+    @GetMapping("/statistics/expenses")
+    public ResponseEntity<List<PurchaseReport>> getPurchaseReport() {
+        return new ResponseEntity<>(purchaseOrderServices.getPurchaseSummary(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistics/items")
+    public ResponseEntity<List<ItemsStatistics>> getPurchasedItemsStatistics() {
+        return new ResponseEntity<>(purchaseOrderServices.getMostPurchasedItems(), HttpStatus.OK);
+    }
+
+    @GetMapping("/unpaid")
+    public ResponseEntity<List<DuePurchaseOrders>> getDuePurchaseOrders(@RequestParam(required = false) List<String> additionalFields) {
+        return new ResponseEntity<>(purchaseOrderServices.getDuePurchaseOrders(additionalFields), HttpStatus.OK);
+    }
 }

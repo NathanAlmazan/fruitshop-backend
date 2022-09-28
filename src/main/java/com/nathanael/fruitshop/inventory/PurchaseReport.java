@@ -1,17 +1,15 @@
-package com.nathanael.fruitshop.sales;
+package com.nathanael.fruitshop.inventory;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class DailySalesReport {
+public class PurchaseReport {
     private Integer reportYear;
     private Integer reportMonth;
     private Integer reportDate;
-    private Double totalSales;
+    private Double totalPurchase;
 }

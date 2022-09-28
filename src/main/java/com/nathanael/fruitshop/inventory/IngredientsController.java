@@ -46,4 +46,9 @@ public class IngredientsController implements EntityCrudController<IngredientsDt
     public ResponseEntity<List<IngredientsDto>> getAll(@RequestParam(required = false) List<String> additionalFields) {
         return new ResponseEntity<>(ingredientsServices.getAll(additionalFields), HttpStatus.OK);
     }
+
+    @GetMapping("/graph")
+    public ResponseEntity<List<ItemsReport>> getItemsReportList() {
+        return new ResponseEntity<>(ingredientsServices.getItemsReport(), HttpStatus.OK);
+    }
 }

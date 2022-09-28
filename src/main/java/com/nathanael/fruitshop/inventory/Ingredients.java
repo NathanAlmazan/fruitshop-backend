@@ -1,5 +1,6 @@
 package com.nathanael.fruitshop.inventory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,9 +39,11 @@ public class Ingredients {
     @Column
     private LocalDateTime timestamp = LocalDateTime.now();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "ingredients", fetch = FetchType.LAZY)
     private List<PurchasedItems> purchasedItems;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<ItemsReport> itemsReports;
 }

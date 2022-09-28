@@ -4,6 +4,7 @@ import com.nathanael.fruitshop.global.EntityCrudServices;
 import com.nathanael.fruitshop.global.errors.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -86,4 +87,31 @@ public class PurchaseOrderServices implements EntityCrudServices<PurchaseOrder, 
         return purchaseOrderFactory.entityListToResponse(purchaseOrderRepo.findAll(), additionalFields);
     }
 
+    public List<PurchaseReport> getPurchaseSummary() {
+        List<PurchaseSummary> summary = purchaseOrderRepo.getPurchaseSummary();
+        List<PurchaseReport> purchaseReports = new ArrayList<>();
+
+        summary.forEach(data -> purchaseReports.add(new PurchaseReport(
+                data.getReportYear(), data.getReportMonth(), data.getReportDate(), data.getTotalPurchase()
+        )));
+
+        return purchaseReports;
+    }
+
+    public List<ItemsStatistics> getMostPurchasedItems() {
+        List<MostPurchasedItems> mostPurchasedItems = purchasedItemsRepo.getMostPurchasedItems();
+        List<ItemsStatistics> itemsStatistics = new ArrayList<>();
+
+        mostPurchasedItems.forEach(item -> itemsStatistics.add(new ItemsStatistics(ingredientsServices.getDtoById(item.getItemId(), null), item.getItemCount())));
+        return itemsStatistics;
+    }
+
+    public List<DuePurchaseOrders> getDuePurchaseOrders(List<String> additionalFields) {
+        List<UnpaidPurchaseOrders> unpaidPurchaseOrders = purchaseOrderRepo.getUnpaidPurchaseOrders();
+        List<DuePurchaseOrders> duePurchaseOrders = new ArrayList<>();
+
+        unpaidPurchaseOrders.forEach(order -> duePurchaseOrders.add(new DuePurchaseOrders(getDtoById(order.getPurchaseId(), additionalFields), order.getOrderDueDate())));
+
+        return duePurchaseOrders;
+    }
 }

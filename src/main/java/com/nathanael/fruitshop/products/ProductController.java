@@ -37,13 +37,13 @@ public class ProductController implements EntityCrudController<ProductDto, Strin
 
     @GetMapping("/{id}")
     @Override
-    public ResponseEntity<ProductDto> getById(@PathVariable String id, @RequestParam(required = false) List<String> additionalFields) {
+    public ResponseEntity<ProductDto> getById(@PathVariable String id, @RequestParam List<String> additionalFields) {
         return new ResponseEntity<>(productServices.getDtoById(id, additionalFields), HttpStatus.OK);
     }
 
     @GetMapping
     @Override
-    public ResponseEntity<List<ProductDto>> getAll(@RequestParam(required = false) List<String> additionalFields) {
+    public ResponseEntity<List<ProductDto>> getAll(@RequestParam List<String> additionalFields) {
         return new ResponseEntity<>(productServices.getAll(additionalFields), HttpStatus.OK);
     }
 }
