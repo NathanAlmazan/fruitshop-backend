@@ -28,7 +28,7 @@ public class CustomErrorResponse {
 
     public Object getErrorObject() {
         Map<String, Object> errorBody = new LinkedHashMap<>();
-        errorBody.put("timestamp", this.timestamp);
+        errorBody.put("timestamp", this.timestamp.toString());
         errorBody.put("errors", this.errorMessage);
         errorBody.put("status", this.statusCode);
 
