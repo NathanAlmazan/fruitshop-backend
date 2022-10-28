@@ -56,4 +56,9 @@ public class UserController implements EntityCrudController<UserDto, Long> {
     public ResponseEntity<UserDto> resetAccount(@PathVariable Long id) {
         return new ResponseEntity<>(userServices.resetAccount(id), HttpStatus.OK);
     }
+
+    @GetMapping("/names")
+    public ResponseEntity<List<String>> getUserNames() {
+        return new ResponseEntity<>(userServices.getAllAccountNames(), HttpStatus.OK);
+    }
 }

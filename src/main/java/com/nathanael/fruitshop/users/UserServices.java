@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -93,5 +94,14 @@ public class UserServices implements EntityCrudServices<UserAccount, UserDto, Lo
                 });
 
         return userFactory.entityToResponse(account, null);
+    }
+
+    public List<String> getAllAccountNames() {
+        List<String> names = new ArrayList<>();
+        List<UserAccount> accounts = userRepo.findAll();
+
+        accounts.forEach(account -> names.add(account.getFirstName() + " " + account.getLastName()));
+
+        return names;
     }
 }

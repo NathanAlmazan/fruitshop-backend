@@ -5,6 +5,7 @@ import com.nathanael.fruitshop.global.errors.EntityNotFoundException;
 import com.nathanael.fruitshop.global.errors.InvalidRequestException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -98,5 +99,13 @@ public class ProductServices implements EntityCrudServices<Product, ProductDto, 
     public List<ProductDto> getAll(List<String> additionalFields) {
         if (additionalFields.contains("inactive")) return productFactory.entityListToResponse(productRepo.findAllInActiveProducts(), additionalFields);
         return productFactory.entityListToResponse(productRepo.findAllActiveProducts(), additionalFields);
+    }
+
+    public List<String> getAllProductNames() {
+        List<String> productNames = new ArrayList<>();
+        List<Product> products = productRepo.findAllActiveProducts();
+
+        products.forEach(product -> productNames.add(product.getProductName()));
+        return productNames;
     }
 }
