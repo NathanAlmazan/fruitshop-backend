@@ -25,7 +25,6 @@ public class AccountController {
         UserAccount account = userRepo.findByEmail(request.getEmail());
 
         if (account == null) throw new EntityNotFoundException("Employee does not exists.");
-        else if (account.getPassword() != null) throw new InvalidRequestException("Account already exists.");
         account.setPassword(passwordEncoder.encode(request.getPassword()));
 
         return new ResponseEntity<>(userFactory.entityToResponse(userRepo.save(account), null), HttpStatus.OK);

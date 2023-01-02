@@ -19,7 +19,10 @@ public class UserServices implements EntityCrudServices<UserAccount, UserDto, Lo
     @Override
     public UserDto create(UserDto data) {
         if (emailExists(data.getEmail())) throw new InvalidRequestException("User email is already taken.");
+
         if (data.getPassword() != null) data.setPassword(passwordEncoder.encode(data.getPassword()));
+        else data.setPassword(passwordEncoder.encode("Ntea@2023"));
+
         UserAccount newAccount = userRepo.save(userFactory.requestToEntity(data));
         return userFactory.entityToResponse(newAccount, null);
     }

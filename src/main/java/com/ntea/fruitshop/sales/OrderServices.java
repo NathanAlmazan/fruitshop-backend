@@ -6,7 +6,10 @@ import com.ntea.fruitshop.products.ProductDto;
 import com.ntea.fruitshop.products.ProductServices;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -84,7 +87,22 @@ public class OrderServices implements EntityCrudServices<Orders, OrderDto, Long>
         List<DailySalesCount> dailySalesCountList = orderRepo.getDailySalesCount();
         List<DailySalesReport> dailySalesReportList = new ArrayList<>();
 
-        dailySalesCountList.forEach(report -> dailySalesReportList.add(new DailySalesReport(report.getReportYear(), report.getReportMonth(), report.getReportDate(), report.getTotalSales())));
+        dailySalesCountList.forEach(report -> {
+            LocalDateTime start = LocalDateTime.of(report.getReportYear(), report.getReportMonth(), report.getReportDate(), 0, 0, 0);
+            LocalDateTime end = LocalDateTime.of(report.getReportYear(), report.getReportMonth(), report.getReportDate() + 1, 0, 0, 0);
+            List<Orders> gcash = orderRepo.getGCashSales(start, end);
+
+            Double totalGcash = 0.0;
+            for (Orders order : gcash) totalGcash += order.getTotalAmount();
+
+            dailySalesReportList.add(
+                    new DailySalesReport(
+                            report.getReportYear(),
+                            report.getReportMonth(),
+                            report.getReportDate(),
+                            totalGcash,
+                            report.getTotalSales()));
+        });
 
         return dailySalesReportList;
     }

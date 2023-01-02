@@ -13,5 +13,6 @@ public class DailySalesReport {
     private Integer reportYear;
     private Integer reportMonth;
     private Integer reportDate;
+    private Double totalGCash;
     private Double totalSales;
 }

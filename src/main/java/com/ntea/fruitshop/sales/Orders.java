@@ -33,6 +33,9 @@ public class Orders {
     private Double paidAmount;
 
     @Column
+    private Boolean discounted;
+
+    @Column
     private Boolean cancelled = false;
 
     @Column
