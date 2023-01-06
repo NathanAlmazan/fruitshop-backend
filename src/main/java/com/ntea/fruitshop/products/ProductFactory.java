@@ -24,6 +24,7 @@ public class ProductFactory implements ModelFactory<Product, ProductDto> {
         product.setDiscountedPrice(request.getDiscountedPrice());
         product.setProductImage(request.getProductImage());
         product.setIsActive(request.getIsActive());
+        product.setAvailable(request.getAvailable());
         product.setProductCategory(categoryServices.getById(request.getCategoryId()));
 
         return product;
@@ -37,6 +38,7 @@ public class ProductFactory implements ModelFactory<Product, ProductDto> {
         productDto.setDiscountedPrice(entity.getDiscountedPrice());
         productDto.setProductImage(entity.getProductImage());
         productDto.setIsActive(entity.getIsActive());
+        productDto.setAvailable(entity.getAvailable());
         if (entity.getProductCategory() != null) productDto.setCategoryId(entity.getProductCategory().getCategoryId());
 
         if (additionalFields != null) {
@@ -60,6 +62,7 @@ public class ProductFactory implements ModelFactory<Product, ProductDto> {
         entity.setDiscountedPrice(request.getDiscountedPrice());
         entity.setProductImage(request.getProductImage());
         entity.setIsActive(request.getIsActive());
+        entity.setAvailable(request.getAvailable());
         entity.setProductCategory(categoryServices.getById(request.getCategoryId()));
 
         return entity;

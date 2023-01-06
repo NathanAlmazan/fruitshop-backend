@@ -25,7 +25,7 @@ public class OrderDto {
     @Length(max = 13)
     private String transactionId;
 
-    private Boolean discounted;
+    private Double discount;
 
     private Double paidAmount;
 

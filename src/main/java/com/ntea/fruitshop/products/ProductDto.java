@@ -30,6 +30,8 @@ public class ProductDto {
 
     private Boolean isActive = true;
 
+    private Boolean available;
+
     @NotNull(message = "Product category is required.")
     private Long categoryId;
 

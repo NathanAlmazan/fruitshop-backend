@@ -21,7 +21,7 @@ public class OrderFactory implements ModelFactory<Orders, OrderDto> {
         orders.setTransactionId(request.getTransactionId());
         orders.setPaidAmount(request.getPaidAmount());
         orders.setCancelled(request.getCancelled());
-        orders.setDiscounted(request.getDiscounted());
+        orders.setDiscount(request.getDiscount());
 
         return orders;
     }
@@ -36,7 +36,7 @@ public class OrderFactory implements ModelFactory<Orders, OrderDto> {
         orderDto.setTimestamp(entity.getTimestamp());
         orderDto.setPaidAmount(entity.getPaidAmount());
         orderDto.setCancelled(entity.getCancelled());
-        orderDto.setDiscounted(entity.getDiscounted());
+        orderDto.setDiscount(entity.getDiscount());
 
         if (additionalFields != null) {
             if (additionalFields.remove("items")) {

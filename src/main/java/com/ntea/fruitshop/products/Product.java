@@ -33,6 +33,9 @@ public class Product {
     @Column
     private Boolean isActive = true;
 
+    @Column
+    private Boolean available = true;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_category", referencedColumnName = "categoryId")
     private Category productCategory;
